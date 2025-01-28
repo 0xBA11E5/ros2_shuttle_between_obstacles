@@ -77,19 +77,16 @@ class ShuttleLogic(rclpy.node.Node):
             speed = follow_object_speed
             print(f"supposed to stop, speed: {speed}") 
             turn = 0.5
-            turn_duration = 3.1415926535 / 0.5
             # create message
             msg.linear.x = float(speed)
             msg.angular.z = float(turn)
-            start_time = time.time() 
-            while ((time.time() - start_time) < turn_duration):
-                time_left = (time.time() - start_time) - turn_duration
-                print(f"time left turning: {time_left}")
-                self.publisher_.publish(msg) 
-                time.sleep(0.001)
+            self.publisher_.publish(msg) 
+            turn_duration = 3.1415926535 * 2
+            print(f"turnduration: {turn_duration}")
+            time.sleep(turn_duration) 
             print("done turning")
             self.FollowObjectSpeed = 0.3
-            self.FollowObjectTurn = 0.0
+            self.FolowObjectTurn = 0.0
         else:
             print(f"undefined behavior!!!")
             return
